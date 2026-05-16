@@ -130,8 +130,8 @@ const startServer = async () => {
     await connectMongo();
     console.log('MongoDB connected');
 
-    await connectRedis();
-    console.log('Redis connected');
+    // await connectRedis();
+    // console.log('Redis connected');
 
     sockets.init(server);
 
