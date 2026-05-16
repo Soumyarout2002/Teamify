@@ -12,7 +12,7 @@ const session = require('express-session');
 const rateLimit = require('express-rate-limit');
 
 const { connectPostgres } = require('./config/postgres');
-const { connectMongo } = require('./config/mongo');
+// const { connectMongo } = require('./config/mongo');
 // const { connectRedis } = require('./config/redis');
 
 const setupSwagger = require('./config/swagger');
@@ -127,8 +127,8 @@ const startServer = async () => {
     await connectPostgres();
     console.log('PostgreSQL connected');
 
-    await connectMongo();
-    console.log('MongoDB connected');
+    // await connectMongo();
+    // console.log('MongoDB connected');
 
     // await connectRedis();
     // console.log('Redis connected');
