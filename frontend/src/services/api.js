@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { useAuthStore } from '../store/auth'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'https://teamify-backend-o44n.onrender.com/api/auth',
   withCredentials: true,
 })
 
