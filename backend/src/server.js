@@ -13,7 +13,7 @@ const rateLimit = require('express-rate-limit');
 
 const { connectPostgres } = require('./config/postgres');
 const { connectMongo } = require('./config/mongo');
-const { connectRedis } = require('./config/redis');
+// const { connectRedis } = require('./config/redis');
 
 const setupSwagger = require('./config/swagger');
 const sockets = require('./sockets');
