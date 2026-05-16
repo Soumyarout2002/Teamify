@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: teamify_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - teamify
+
+  mongo:
+    image: mongo:6-jammy
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - teamify
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redisdata:/data
+    networks:
+      - teamify
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    env_file:
+      - ./backend/.env
+    environment:
+      - PG_HOST=postgres
+      - MONGO_URI=mongodb://mongo:27017/teamify_audit
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - mongo
+      - redis
+    volumes:
+      - ./backend/logs:/app/logs
+    networks:
+      - teamify
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    networks:
+      - teamify
+
+volumes:
+  pgdata:
+  mongodata:
+  redisdata:
+
+networks:
+  teamify:
+    driver: bridge
