@@ -3,15 +3,20 @@ import toast from 'react-hot-toast'
 import { useAuthStore } from '../store/auth'
 
 const api = axios.create({
- baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 })
 
 api.interceptors.request.use((cfg) => {
   const token = useAuthStore.getState().token
-  if (token) cfg.headers.Authorization = `Bearer ${token}`
+
+  if (token) {
+    cfg.headers.Authorization = `Bearer ${token}`
+  }
+
   return cfg
 })
+
 
 api.interceptors.response.use(
   (r) => r,
@@ -28,13 +33,13 @@ api.interceptors.response.use(
 
 // Auth
 export const authAPI = {
-  register:       (d) => api.post('/auth/register', d),
-  login:          (d) => api.post('/auth/login', d),
-  logout:         ()  => api.post('/auth/logout'),
-  me:             ()  => api.get('/auth/me'),
-  forgotPassword: (e) => api.post('/auth/forgot-password', { email: e }),
-  resetPassword:  (token, password) => api.post(`/auth/reset-password/${token}`, { password }),
-  changePassword: (d) => api.put('/auth/change-password', d),
+  register:       (d) => api.post('/register', d),
+  login:          (d) => api.post('/login', d),
+  logout:         ()  => api.post('/logout'),
+  me:             ()  => api.get('/me'),
+  forgotPassword: (e) => api.post('/forgot-password', { email: e }),
+  resetPassword:  (token, password) => api.post(`/reset-password/${token}`, { password }),
+  changePassword: (d) => api.put('/change-password', d),
 }
 
 // Projects
