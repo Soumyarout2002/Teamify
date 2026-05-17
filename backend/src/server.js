@@ -40,7 +40,10 @@ const PORT = parseInt(process.env.PORT, 10) || 5000;
 app.use(helmet());
 
 app.use(cors({
-  origin: true,
+  origin: [
+    'http://localhost:5173',
+    'https://teamify-fxulzurwl-soumyarout2002s-projects.vercel.app'
+  ],
   credentials: true
 }));
 
