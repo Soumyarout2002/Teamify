@@ -10,13 +10,26 @@ const api = axios.create({
 api.interceptors.request.use((cfg) => {
   const token = useAuthStore.getState().token
 
-  if (token) {
+  const authRoutes = [
+    '/auth/login',
+    '/auth/register',
+    '/auth/logout',
+    '/auth/forgot-password',
+    '/auth/reset-password'
+  ]
+
+  const isAuthRoute = authRoutes.some((route) =>
+    cfg.url?.includes(route)
+  )
+
+  if (token && !isAuthRoute) {
     cfg.headers.Authorization = `Bearer ${token}`
+  } else {
+    delete cfg.headers.Authorization
   }
 
   return cfg
 })
-
 
 api.interceptors.response.use(
   (r) => r,
