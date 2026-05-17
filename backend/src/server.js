@@ -44,11 +44,11 @@ app.use(cors({
     'http://localhost:5173',
     'https://teamify-nu.vercel.app'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options('*', cors());
 app.use(compression());
 
 app.use(
