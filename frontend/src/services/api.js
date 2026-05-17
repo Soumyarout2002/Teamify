@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { useAuthStore } from '../store/auth'
 
 const api = axios.create({
-  baseURL: 'https://teamify-backend-o44n.onrender.com/api/auth',
+  baseURL: 'https://teamify-backend-o44n.onrender.com/api',
   withCredentials: true,
 })
 
@@ -33,13 +33,22 @@ api.interceptors.response.use(
 
 // Auth
 export const authAPI = {
-  register:       (d) => api.post('/register', d),
-  login:          (d) => api.post('/login', d),
-  logout:         ()  => api.post('/logout'),
-  me:             ()  => api.get('/me'),
-  forgotPassword: (e) => api.post('/forgot-password', { email: e }),
-  resetPassword:  (token, password) => api.post(`/reset-password/${token}`, { password }),
-  changePassword: (d) => api.put('/change-password', d),
+ register: (d) => api.post('/auth/register', d),
+
+login: (d) => api.post('/auth/login', d),
+
+logout: () => api.post('/auth/logout'),
+
+me: () => api.get('/auth/me'),
+
+forgotPassword: (email) =>
+  api.post('/auth/forgot-password', { email }),
+
+resetPassword: (token, password) =>
+  api.post(`/auth/reset-password/${token}`, { password }),
+
+changePassword: (data) =>
+  api.put('/auth/change-password', data),
 }
 
 // Projects
