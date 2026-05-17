@@ -42,8 +42,9 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://teamify-fxulzurwl-soumyarout2002s-projects.vercel.app'
+    'https://teamify-nu.vercel.app'
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
